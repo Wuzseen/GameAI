@@ -29,8 +29,8 @@ public class Vector2 {
 	
 	public Vector2 subtract(Vector2 other) {
 		Vector2 ret = new Vector2();
-		ret._x = other._x - this._x;
-		ret._y = other._y - this._y;
+		ret._x = this._x - other._x;
+		ret._y = this._y - other._y;
 		return ret;
 	}
 	
@@ -43,6 +43,10 @@ public class Vector2 {
 		return new Vector2(this._x / mag, this._y / mag);
 	}
 	
+	public Vector2 scalarMultiply(double scale) {
+		return new Vector2(this._x * scale, this._y * scale);
+	}
+	
 	public Vector2() {
 		this._x = 0;
 		this._y = 0;
@@ -51,5 +55,24 @@ public class Vector2 {
 	public Vector2(double x, double y) {
 		this._x = x;
 		this._y = y;
+	}
+	
+	public String toString() {
+		return "(" + this._x + "," + this._y + ")";
+	}
+	
+	public double alpha() {
+		Vector2 norm = this.normal();
+		return Math.atan2(norm._y, norm._x);
+	}
+	
+	public double dotProduct(Vector2 other) {
+		return this._x * other._x + other._y * this._y;
+	}
+	
+	public double distance(Vector2 other) {
+		double dx = other._x - this._x;
+		double dy = other._y - this._y;
+		return Math.sqrt(dx * dx + dy * dy);
 	}
 }

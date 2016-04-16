@@ -1,10 +1,14 @@
 package engine;
 
 import controllers.Controller;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+
 import javax.imageio.ImageIO;
+
+import utility.Vector2;
 
 /**
  *
@@ -28,6 +32,19 @@ public class Car extends GameObject {
         m_alpha = alpha;
         m_controller = c;
         m_collision_box = new RotatedRectangle(m_x, m_y, m_img.getWidth()/2, m_img.getHeight()/2, m_alpha);
+    }
+    
+    public Vector2 direction() {
+    	return new Vector2(Math.cos(m_alpha), Math.sin(m_alpha));
+    }
+    
+    public Vector2 velocity() {
+    	return this.direction().scalarMultiply(m_speed);
+    }
+    
+    public void moveTowards(Vector2 A) {
+    	m_alpha = A.alpha();
+    	m_speed = A.magnitude();
     }
     
     public double getAngle() {
