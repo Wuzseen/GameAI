@@ -2,6 +2,8 @@ package engine;
 
 import java.awt.Graphics2D;
 
+import utility.Vector2;
+
 /**
  *
  * @author santi
@@ -26,6 +28,12 @@ public abstract class GameObject {
     
     public double getY() {
         return m_y;
+    }
+    
+    // TODO: optimize this
+    // Helper method, would be best to not recreate this on every call.
+    public Vector2 position() {
+    	return new Vector2(m_x, m_y);
     }
 
     public boolean collision(GameObject o) {
