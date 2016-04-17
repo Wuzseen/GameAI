@@ -17,6 +17,11 @@ public class SeekController extends Controller {
 	double distForMax = 200;
 	double breakDistance = 20;
 	
+	double currentAlpha = 0;
+	double targetAlpha = 0;
+	
+	double lastDelta = 0;
+	
 	public SeekController(GameObject target)
 	{
 		this._tar = target;
@@ -31,6 +36,12 @@ public class SeekController extends Controller {
         return dnorm.scalarMultiply(maxAcceleration * MathUtil.InverseLerp(targetPosition.distance(thisPosition), 0, distForMax));
 	}
 	
+	double doRotationClamp() {
+		currentAlpha = rotClamp(currentAlpha);
+		targetAlpha = rotClamp(targetAlpha);
+		return 0;
+	}
+	
     public void update(Car subject, Game game, double delta_t, double[] controlVariables) {
         Vector2 seek = Seek(subject, this._tar); // A
         
@@ -42,22 +53,18 @@ public class SeekController extends Controller {
         	this.throttle = maxThrottle * MathUtil.InverseLerp(distance, 0, this.distForMax);
         }
         
-        double targetAlpha = seek.alpha() * 180 / Math.PI;
-        double currentAlpha = subject.getAngle() * 180 / Math.PI;
-        if(targetAlpha < 0) {
-        	targetAlpha = 360 + targetAlpha;
-        }
-        else if(targetAlpha > 360) {
-        	targetAlpha -= 360;
-        }
-        if(currentAlpha < 0) {
-        	currentAlpha = 360 + currentAlpha;
-        }
-        else if(currentAlpha > 360) {
-        	currentAlpha -= 360;
-        }
+        // Convert Rad 2 Deg for mental help!
+        targetAlpha = seek.alpha() * 180 / Math.PI;
+        currentAlpha = subject.getAngle() * 180 / Math.PI;
+        
         double alphaDelta = targetAlpha - currentAlpha; // if 0 -> moving in correction direction
-        if(alphaDelta == 0) {
+        if(alphaDelta < -180) {
+        	alphaDelta += 360;
+        }
+        if(alphaDelta > 180) {
+        	alphaDelta -= 360;
+        }
+        if(Math.abs(alphaDelta) < 1) { // close enough...
         	this.steer = 0;
         }
         else if(alphaDelta > 0) {
@@ -72,6 +79,8 @@ public class SeekController extends Controller {
         	}
         	this.steer -= steerVal * delta_t;
         }
+        
+        lastDelta = alphaDelta;
         controlVariables[VARIABLE_STEERING] = this.steer;
         controlVariables[VARIABLE_THROTTLE] = this.throttle;
         controlVariables[VARIABLE_BRAKE] = this.brake;
