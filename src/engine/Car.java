@@ -42,11 +42,6 @@ public class Car extends GameObject {
     	return this.direction().scalarMultiply(m_speed);
     }
     
-    public void moveTowards(Vector2 A) {
-    	m_alpha = A.alpha();
-    	m_speed = A.magnitude();
-    }
-    
     public double getAngle() {
         return m_alpha;
     }
