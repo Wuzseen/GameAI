@@ -36,12 +36,6 @@ public class SeekController extends Controller {
         return dnorm.scalarMultiply(maxAcceleration * MathUtil.InverseLerp(targetPosition.distance(thisPosition), 0, distForMax));
 	}
 	
-	double doRotationClamp() {
-		currentAlpha = rotClamp(currentAlpha);
-		targetAlpha = rotClamp(targetAlpha);
-		return 0;
-	}
-	
     public void update(Car subject, Game game, double delta_t, double[] controlVariables) {
         Vector2 seek = Seek(subject, this._tar); // A
         
