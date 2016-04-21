@@ -12,7 +12,7 @@ public class WallAvoidanceController extends Controller {
 	double throttle = 0;
 	double brake = 0;
 	
-	double steerVal = 5;
+	double steerVal = 9;
 	double maxThrottle = 2;
 	double maxAcceleration = 200;
 	double distForMax = 200;
@@ -23,7 +23,7 @@ public class WallAvoidanceController extends Controller {
 	
 	double lastDelta = 0;
 	
-	double raycastDistance = 50;
+	double raycastDistance = 80;
 	
 	public WallAvoidanceController(GameObject target)
 	{
@@ -49,17 +49,17 @@ public class WallAvoidanceController extends Controller {
         Vector2 left = Vector2.rotateVector(forward, MathUtil.deg2Rad(45));
         
         Raycast forwardRay = Raycast.doRaycast(game, subject, forward, raycastDistance, startRectangle);
-        if(forwardRay.isHit()) {
-        	// we have to avoid a wall
+        Raycast rightRay = Raycast.doRaycast(game, subject, right, raycastDistance, startRectangle);
+        Raycast leftRay = Raycast.doRaycast(game, subject, left, raycastDistance, startRectangle);
+        if(forwardRay.isHit() || rightRay.isHit() || leftRay.isHit()) {
+        	// break a little to avoid a wall
         	this.brake += .1 * delta_t;
-            Raycast rightRay = Raycast.doRaycast(game, subject, right, raycastDistance, startRectangle);
-            Raycast leftRay = Raycast.doRaycast(game, subject, left, raycastDistance, startRectangle);
             if(rightRay.isHit()) {
             	// don't turn right if the right is occupied
-            	steerLeft(delta_t * 16);
+            	steerLeft(delta_t);
             } else {
             	// if the right is hit, turn left. If both are hit, we have to 180 so we might as well turn left.
-            	steerRight(delta_t * 16);
+            	steerRight(delta_t);
                 //Raycast leftRay = Raycast.doRaycast(game, subject, left, raycastDistance, startRectangle);
             }
         }
