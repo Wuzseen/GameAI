@@ -48,12 +48,12 @@ public class WallAvoidanceController extends Controller {
         Vector2 right = Vector2.rotateVector(forward, MathUtil.deg2Rad(-45));
         Vector2 left = Vector2.rotateVector(forward, MathUtil.deg2Rad(45));
         
-        Raycast forwardRay = Raycast.doRaycast(game, subject, forward, raycastDistance, startRectangle);
-        Raycast rightRay = Raycast.doRaycast(game, subject, right, raycastDistance, startRectangle);
-        Raycast leftRay = Raycast.doRaycast(game, subject, left, raycastDistance, startRectangle);
+        Raycast forwardRay = Raycast.doRaycast(game, subject, forward, raycastDistance, startRectangle, _tar);
+        Raycast rightRay = Raycast.doRaycast(game, subject, right, raycastDistance, startRectangle, _tar);
+        Raycast leftRay = Raycast.doRaycast(game, subject, left, raycastDistance, startRectangle, _tar);
         if(forwardRay.isHit() || rightRay.isHit() || leftRay.isHit()) {
         	// break a little to avoid a wall
-        	this.brake += .1 * delta_t;
+        	//this.brake += .1 * delta_t;
             if(rightRay.isHit()) {
             	// don't turn right if the right is occupied
             	steerLeft(delta_t);

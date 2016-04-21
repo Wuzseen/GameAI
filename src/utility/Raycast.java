@@ -9,21 +9,21 @@ public class Raycast {
 	private double distance;
 	private GameObject other;
 	
-	public Raycast(Game game, GameObject srcObj, Vector2 direction, double distance, RotatedRectangle source) {
-		this.distance = raycast(game, srcObj, direction, distance, source);
+	public Raycast(Game game, GameObject srcObj, Vector2 direction, double distance, RotatedRectangle source, GameObject ignore) {
+		this.distance = raycast(game, srcObj, direction, distance, source, ignore);
 	}
 	
 	public Boolean isHit() {
 		return getDistance() >= 0;
 	}
 	
-	public static Raycast doRaycast(Game game, GameObject srcObj, Vector2 direction, double distance, RotatedRectangle source) {		
-		return new Raycast(game, srcObj, direction, distance, source);
+	public static Raycast doRaycast(Game game, GameObject srcObj, Vector2 direction, double distance, RotatedRectangle source, GameObject ignoreCar) {		
+		return new Raycast(game, srcObj, direction, distance, source, ignoreCar);
 	}
 	
 	
 	// -1 is sentinel value
-	public double raycast(Game game, GameObject srcObj, Vector2 direction, double distance, RotatedRectangle source) {
+	public double raycast(Game game, GameObject srcObj, Vector2 direction, double distance, RotatedRectangle source, GameObject ignoreCar) {
 		RotatedRectangle srcCpy = new RotatedRectangle(source);
 		Vector2 startPosition = srcObj.position();
 		
@@ -31,7 +31,7 @@ public class Raycast {
 		do {
 			Vector2 newPosition = startPosition.add(direction.scalarMultiply(distTraveled));
 			srcCpy.setPosition(newPosition.get_x(), newPosition.get_y());
-			GameObject coll = game.collision(srcCpy, srcObj);
+			GameObject coll = game.collision(srcCpy, srcObj, ignoreCar);
 			if(coll != null) {
 				//System.out.println(distTraveled);
 				this.other = coll;

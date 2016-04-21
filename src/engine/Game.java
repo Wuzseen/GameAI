@@ -64,9 +64,10 @@ public class Game {
     }
 
     // Ignore source (for raycasting)
-    public GameObject collision(RotatedRectangle r, GameObject src) {
+    public GameObject collision(RotatedRectangle r, GameObject ignore, GameObject ignore2) {
         for(GameObject o2:m_objects) {
-            if (o2!=src && o2.collision(r)) return o2;
+        	if (o2 == ignore || o2 == ignore2) continue;
+            if (o2.collision(r)) return o2;
         }
         return null;
     }

@@ -1,6 +1,8 @@
 package test;
 
 import controllers.ArriveController;
+
+import java.util.*;
 import engine.Car;
 import engine.Game;
 import engine.GameObject;
@@ -24,6 +26,7 @@ public class ArriveScenario {
     */
     
     public static void main(String args[]) throws Exception {
+    	Random r = new Random();
         Game game = new Game(800,600, 25);
         // set up the outside walls:
         game.add(new Obstacle(0,0,800,25,Color.GRAY));
@@ -31,8 +34,12 @@ public class ArriveScenario {
         game.add(new Obstacle(0,0,25,600,Color.GRAY));
         game.add(new Obstacle(775,0,25,600,Color.GRAY));
         // set up the cars and markers:
-        GameObject marker = new Marker(400,400,10, Color.green);
-        GameObject car1 = new Car("graphics/redcar.png",200,300,-Math.PI/2, new ArriveController(marker));
+        double x = 15 + r.nextDouble() * 600;
+        double y = 15 + r.nextDouble() * 600;
+        GameObject marker = new Marker(x,y,10, Color.green);
+        x = 15 + r.nextDouble() * 600;
+        y = 15 + r.nextDouble() * 600;
+        GameObject car1 = new Car("graphics/redcar.png",x,y,-Math.PI/2, new ArriveController(marker));
         game.add(marker);
         game.add(car1);
         GameWindow.newWindow(game);
