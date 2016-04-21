@@ -34,7 +34,7 @@ public class Car extends GameObject {
         m_collision_box = new RotatedRectangle(m_x, m_y, m_img.getWidth()/2, m_img.getHeight()/2, m_alpha);
     }
     
-    public Vector2 direction() {
+    public Vector2 direction() { // forward
     	return new Vector2(Math.cos(m_alpha), Math.sin(m_alpha));
     }
     

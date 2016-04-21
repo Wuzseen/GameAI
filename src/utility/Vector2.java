@@ -75,4 +75,17 @@ public class Vector2 {
 		double dy = other._y - this._y;
 		return Math.sqrt(dx * dx + dy * dy);
 	}
+	
+	// Grabbed from the other vector2 class in RotatedRectangle.java
+	// ang in rads
+	public static Vector2 rotateVector(Vector2 source, double ang) {
+        double t;
+        double cosa = Math.cos(ang);
+        double sina = Math.sin(ang);
+        Vector2 ret = new Vector2(source._x, source._y);
+        t = ret._x; 
+        ret._x = t*cosa + ret._y*sina; 
+        ret._y = -t*sina + ret._y*cosa;
+        return ret;
+	}
 }

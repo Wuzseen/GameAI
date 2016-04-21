@@ -74,8 +74,8 @@ public class ArriveController extends Controller {
         }
         
         // Convert Rad 2 Deg for mental help!
-        targetAlpha = arrive.alpha() * 180 / Math.PI;
-        currentAlpha = subject.getAngle() * 180 / Math.PI;
+        targetAlpha = MathUtil.rad2Deg(arrive.alpha());//arrive.alpha() * 180 / Math.PI;
+        currentAlpha = MathUtil.rad2Deg(subject.getAngle());//subject.getAngle() * 180 / Math.PI;
         
         double alphaDelta = targetAlpha - currentAlpha; // if 0 -> moving in correction direction
         if(alphaDelta < -180) {

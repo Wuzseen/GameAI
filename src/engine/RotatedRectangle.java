@@ -32,6 +32,11 @@ public class RotatedRectangle {
     public _Vector2D C,S;
     public double ang;
     
+    public void setPosition(double x, double y) {
+    	C.x = x;
+    	C.y = y;
+    }
+    
     public RotatedRectangle(double x, double y, double width, double height, double angle) {
         C = new _Vector2D();
         S = new _Vector2D();
@@ -40,6 +45,16 @@ public class RotatedRectangle {
         S.x = width;
         S.y = height;
         ang = angle;
+    }
+    
+    public RotatedRectangle(RotatedRectangle source) {
+        C = new _Vector2D();
+        S = new _Vector2D();
+        C.x = source.C.x;
+        C.y = source.C.y;
+        S.x = source.S.x;
+        S.y = source.S.y;
+        ang = source.ang;
     }
 
     public static boolean RotRectsCollision(double x1, double y1, double width1, double height1, double angle1,

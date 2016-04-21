@@ -62,6 +62,14 @@ public class Game {
         }
         return null;
     }
+
+    // Ignore source (for raycasting)
+    public GameObject collision(RotatedRectangle r, GameObject src) {
+        for(GameObject o2:m_objects) {
+            if (o2!=src && o2.collision(r)) return o2;
+        }
+        return null;
+    }
     
     /*
     The bottom two are the two main functions of the game engine:

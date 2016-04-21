@@ -19,4 +19,12 @@ public class MathUtil {
 		}
 		return val;
 	}
+	
+	public static double deg2Rad(double degrees) {
+		return degrees * Math.PI / 180;
+	}
+	
+	public static double rad2Deg(double radians) {
+		return 180 * radians / Math.PI;
+	}
 }
